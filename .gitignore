@@ -1,0 +1,7 @@
+zupashecretcodes.txt
+.env.example
+backend/db/00-schema.sql
+backend/.env
+backend/.env.example
+frontend/.env
+frontend/.env.example
