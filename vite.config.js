@@ -1,3 +1,5 @@
+// config for vite slik at jeg kan raskt test om siden fungerer
+
 import { defineConfig } from 'vite'
 
 export default defineConfig({
