@@ -6,7 +6,8 @@ export default defineConfig({
   root: 'Frontend',
   base: '/',
   build: {
-    outDir: '../docs'
+    outDir: '../docs',
+    emptyOutDir: true
   },
   server: {
     port: 5173,
