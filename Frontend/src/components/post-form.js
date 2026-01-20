@@ -4,16 +4,16 @@ export function renderPostForm(container, onSuccess) {
   container.innerHTML = `
     <h2>Lag blogg</h2>
     <form id="post-create-form">
-      <div>
+      <div id="title">
         <label>Tittel<br><input name="title" required></label>
       </div>
-      <div>
+      <div id="excerpt">
         <label>Utdrag<br><textarea name="excerpt"></textarea></label>
       </div>
-      <div>
+      <div id="content">
         <label>Content<br><textarea name="content" required></textarea></label>
       </div>
-      <div>
+      <div id="button">
         <button type="submit">Ferdig</button>
         <span id="post-form-status" style="margin-left:12px"></span>
       </div>
