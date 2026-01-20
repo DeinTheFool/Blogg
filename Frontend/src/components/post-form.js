@@ -2,7 +2,7 @@ import { supabase } from '../modules/supabase.js'
 
 export function renderPostForm(container, onSuccess) {
   container.innerHTML = `
-    <h2>Lag blog</h2>
+    <h2>Lag blogg</h2>
     <form id="post-create-form">
       <div>
         <label>Tittel<br><input name="title" required></label>
