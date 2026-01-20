@@ -11,3 +11,10 @@ renderPostForm(formContainer, async () => {
 
 
 renderPostList(listContainer)
+
+
+function getPost() { // finne ID, lagre som variabel, bruke ID for å finne data
+  let postID = id;
+  // redirect med id
+  
+}

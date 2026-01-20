@@ -22,6 +22,7 @@ export async function renderPostList(container) {
     data.forEach(post => {
       const el = document.createElement('article')
       el.className = 'post-card'
+      el.id = post.id
       const date = post.created_at ? new Date(post.created_at).toLocaleString() : ''
       el.innerHTML = `
         <h3>${escapeHtml(post.title)}</h3>
