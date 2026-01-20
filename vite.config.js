@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   root: 'Frontend',
-  base: '/Blogg/',
+  base: '/',
   build: {
     outDir: '../docs'
   },
