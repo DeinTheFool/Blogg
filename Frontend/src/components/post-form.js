@@ -2,16 +2,16 @@ import { supabase } from '../modules/supabase.js'
 
 export function renderPostForm(container, onSuccess) {
   container.innerHTML = `
-    <h2>Lag blogg</h2>
+    <h2>Lag post</h2>
     <form id="post-create-form">
       <div id="title">
-        <label>Tittel<br><input name="title" required></label>
+        <label>Tittel<br><input name="title" required placeholder="Eksempeltittel"></label> 
       </div>
       <div id="excerpt">
-        <label>Utdrag<br><textarea name="excerpt"></textarea></label>
+        <label>Utdrag<br><textarea name="excerpt" placeholder="Kort inngress"></textarea></label>
       </div>
       <div id="content">
-        <label>Content<br><textarea name="content" required></textarea></label>
+        <label>Content<br><textarea name="content" required placeholder="Tekst"></textarea></label>
       </div>
       <div id="button">
         <button type="submit">Ferdig</button>
