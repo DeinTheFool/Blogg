@@ -7,6 +7,11 @@ html {
     display: flex;
     justify-content: center;
 }
+
+#post-create-form label textarea, input {
+    background-color: #E8E8E4;
+}
+
 h2 {
     display: flex;
     justify-content: center;
@@ -67,6 +72,8 @@ body {
 	height: 100vh;
 }
 
+
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -78,5 +85,3 @@ body {
 		background-position: 0% 50%;
 	}
 }
-
-
