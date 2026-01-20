@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   root: 'frontend',
+  base: '/Blogg/',
   server: {
     port: 5173,
     proxy: {
