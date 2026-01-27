@@ -148,9 +148,8 @@
     <script type="module">
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
 
-        // Initialize Supabase client
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL'
-        const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY'
+        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+        const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
         const form = document.getElementById('login-form')
@@ -163,12 +162,11 @@
             const email = document.getElementById('email').value
             const password = document.getElementById('password').value
 
-            // Show loading state
             loading.style.display = 'block'
             errorMessage.style.display = 'none'
 
             try {
-                // Sign in with email and password
+                
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email: email,
                     password: password
@@ -178,18 +176,18 @@
                     throw error
                 }
 
-                // Successful login
+                
                 console.log('Login successful:', data)
                 
-                // Store session token
+                
                 localStorage.setItem('user_token', data.session.access_token)
                 localStorage.setItem('user_email', data.user.email)
 
-                // Redirect to admin dashboard
+                
                 window.location.href = '/admin/dashboard.html'
 
             } catch (error) {
-                // Show error message
+                
                 errorMessage.textContent = error.message || 'Login failed. Please try again.'
                 errorMessage.style.display = 'block'
                 loading.style.display = 'none'
