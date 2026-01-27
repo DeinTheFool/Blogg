@@ -5,7 +5,8 @@ import { createClient } from '@supabase/supabase-js'
 
 const formContainer = document.getElementById('post-form')
 const listContainer = document.getElementById('post-list')
-
+const supabase = createClient(VITE_SUPABASE_URL, VITE_SUPABASE_SERVICE_KEY)
+const { data, error } = await supabase.auth.refreshSession()
 
 
 renderPostForm(formContainer, async () => {

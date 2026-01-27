@@ -19,6 +19,20 @@
         <section id="post-list"></section>
       </main>
     </div>
-    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/main.js">
+      import { isAuthenticated, getCurrentUser } from '../modules/supabase.js'
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const authenticated = await isAuthenticated()
+    
+    if (!authenticated) {
+        window.location.href = '/pages/admin-login.html'
+    } else {
+        const user = await getCurrentUser()
+        console.log('Welcome,', user.email)
+    }
+})
+    </script>
   </body>
 </html>

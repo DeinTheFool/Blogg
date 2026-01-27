@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .subtitle {
+            color: #999;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            color: #e74c3c;
+            margin-top: 15px;
+            padding: 12px;
+            background: #fadbd8;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            color: #667eea;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Admin Login</h1>
+        <p class="subtitle">Enter your credentials to access the blog dashboard</p>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    placeholder="your@email.com"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    placeholder="••••••••"
+                >
+            </div>
+
+            <button type="submit">Sign In</button>
+        </form>
+
+        <div class="error" id="error-message"></div>
+        <div class="loading" id="loading">Signing in...</div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+
+        // Initialize Supabase client
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'
+        const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY'
+        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+        const form = document.getElementById('login-form')
+        const errorMessage = document.getElementById('error-message')
+        const loading = document.getElementById('loading')
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const email = document.getElementById('email').value
+            const password = document.getElementById('password').value
+
+            // Show loading state
+            loading.style.display = 'block'
+            errorMessage.style.display = 'none'
+
+            try {
+                // Sign in with email and password
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                })
+
+                if (error) {
+                    throw error
+                }
+
+                // Successful login
+                console.log('Login successful:', data)
+                
+                // Store session token
+                localStorage.setItem('user_token', data.session.access_token)
+                localStorage.setItem('user_email', data.user.email)
+
+                // Redirect to admin dashboard
+                window.location.href = '/admin/dashboard.html'
+
+            } catch (error) {
+                // Show error message
+                errorMessage.textContent = error.message || 'Login failed. Please try again.'
+                errorMessage.style.display = 'block'
+                loading.style.display = 'none'
+                console.error('Login error:', error)
+            }
+        })
+    </script>
+</body>
+</html>
