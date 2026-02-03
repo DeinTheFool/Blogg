@@ -6,7 +6,7 @@ export default defineConfig({
   root: 'Frontend',
   base: '/',
   build: {
-    outDir: '../dist',
+    outDir: 'dist',
     emptyOutDir: true,
     sourcemap: false,
     minify: 'esbuild'
