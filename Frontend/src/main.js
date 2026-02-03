@@ -7,13 +7,15 @@ const formContainer = document.getElementById('post-form')
 const listContainer = document.getElementById('post-list')
 const userInfo = document.getElementById('user-info')
 
-// // Sjekker om brukeren er logget inn
+// Sjekker om brukeren er logget inn
 async function initApp() {
   try {
     const authenticated = await isAuthenticated()
+    console.log('Auth check result:', authenticated)
     
     if (!authenticated) {
-      window.location.href = '/assets/login.html'
+      console.log('Not authenticated, redirecting to login')
+      window.location.replace('/assets/login.html')
       return
     }
     
@@ -42,9 +44,11 @@ async function initApp() {
     renderPostList(listContainer)
   } catch (error) {
     console.error('Error initializing app:', error)
-    window.location.href = '/assets/login.html'
+    window.location.replace('/assets/login.html')
   }
 }
 
-// Kjører init når DOM er klar
-document.addEventListener('DOMContentLoaded', initApp)
+// Kjører bare på index for å forhindre uendelig loop
+if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+  document.addEventListener('DOMContentLoaded', initApp)
+}
