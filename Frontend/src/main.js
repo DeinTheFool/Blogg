@@ -7,9 +7,18 @@ const formContainer = document.getElementById('post-form')
 const listContainer = document.getElementById('post-list')
 const userInfo = document.getElementById('user-info')
 
+// Viser lasteprossessen
+function showLoading() {
+  formContainer.innerHTML = '<p>Checking authentication...</p>'
+  listContainer.innerHTML = ''
+}
+
 // Sjekker om brukeren er logget inn
 async function initApp() {
+  showLoading()
+  
   try {
+    console.log('Starting auth check...')
     const authenticated = await isAuthenticated()
     console.log('Auth check result:', authenticated)
     
@@ -44,6 +53,7 @@ async function initApp() {
     renderPostList(listContainer)
   } catch (error) {
     console.error('Error initializing app:', error)
+    formContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`
     window.location.replace('/assets/login.html')
   }
 }
