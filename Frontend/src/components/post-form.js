@@ -1,5 +1,14 @@
 import { supabase } from '../modules/supabase.js'
 
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
 export function renderPostForm(container, onSuccess) {
   container.innerHTML = `
     <h2>Lag post</h2>
