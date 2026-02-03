@@ -10,7 +10,10 @@
   <body>
     <div id="app">
       <header>
-        
+        <div class="header-top">
+          <h1>Admin Dashboard</h1>
+          <div id="user-info"></div>
+        </div>
       </header>
 
       <main>
@@ -19,20 +22,6 @@
         <section id="post-list"></section>
       </main>
     </div>
-    <script type="module" src="./src/main.js">
-      import { isAuthenticated, getCurrentUser } from '/modules/supabase.js'
-
-
-document.addEventListener('DOMContentLoaded', async () => {
-    const authenticated = await isAuthenticated()
-    
-    if (!authenticated) {
-        window.location.href = '/assets/login.html'
-    } else {
-        const user = await getCurrentUser()
-        console.log('Welcome,', user.email)
-    }
-})
-    </script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>

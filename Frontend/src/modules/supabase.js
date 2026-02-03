@@ -19,8 +19,13 @@ export async function getCurrentUser() {
 
 
 export async function logout() {
-    await supabase.auth.signOut()
-    localStorage.removeItem('user_token')
-    localStorage.removeItem('user_email')
-    window.location.href = '/'
+    try {
+        await supabase.auth.signOut()
+        localStorage.removeItem('user_token')
+        localStorage.removeItem('user_email')
+        window.location.href = '/assets/login.html'
+    } catch (error) {
+        console.error('Logout error:', error)
+        window.location.href = '/assets/login.html'
+    }
 }
