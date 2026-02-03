@@ -27,8 +27,24 @@ export async function isAuthenticated() {
     // passer på at en session blir gjenopptatt før den går gjennom hele prosessen
     await initializeSession()
     
-    const { data: { session } } = await supabase.auth.getSession()
-    return !!session
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession()
+      
+      if (error) {
+        console.error('Error checking session:', error)
+        return false
+      }
+      
+      console.log('Session check - authenticated:', !!session)
+      if (session) {
+        console.log('Session user:', session.user.email)
+      }
+      
+      return !!session
+    } catch (error) {
+      console.error('Exception in isAuthenticated:', error)
+      return false
+    }
 }
 
 
