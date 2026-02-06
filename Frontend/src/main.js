@@ -9,6 +9,7 @@ const userInfo = document.getElementById('user-info')
 
 // Viser lasteprossessen
 function showLoading() {
+  console.log("Loading")
   formContainer.innerHTML = '<p>Checking authentication...</p>'
   listContainer.innerHTML = ''
 }
@@ -60,5 +61,6 @@ async function initApp() {
 
 // Kjører bare på index for å forhindre uendelig loop
 if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+  console.log("Sending to login")
   document.addEventListener('DOMContentLoaded', initApp)
 }

@@ -55,6 +55,7 @@ export async function getCurrentUser() {
 
 
 export async function logout() {
+  // logg ut funksjon
     try {
         await supabase.auth.signOut()
         localStorage.removeItem('user_token')
