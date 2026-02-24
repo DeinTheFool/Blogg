@@ -1,5 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 
+// Debug: verify Vite injected environment variables (do not log secrets)
+try {
+  console.log('Supabase env -> URL present:', !!import.meta.env.VITE_SUPABASE_URL, 'ANON_KEY present:', !!import.meta.env.VITE_SUPABASE_ANON_KEY)
+} catch (e) {
+  console.log('Supabase env check failed', e)
+}
+
 export const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY
