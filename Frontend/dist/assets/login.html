@@ -6,7 +6,6 @@
   <title>Admin Login</title>
   <link rel="stylesheet" crossorigin href="/assets/index-Cn6I3yi5.css">
   <style>
-    /* keep the inline styles from the original login page for layout */
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#272b3a 0%,#da07e9 100%);min-height:100vh;display:flex;align-items:center;justify-content:center}
     .login-container{background:white;padding:40px;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.3);width:100%;max-width:400px}
     h1{font-size:1.8rem;margin-bottom:10px;color:#333}
@@ -23,12 +22,12 @@
 <body>
   <div class="login-container">
     <h1>Admin Login</h1>
-    <p class="subtitle">Enter your credentials to access the blog dashboard</p>
-
+    <p class="subtitle">Logg inn for å redigere blogger</p>
+    
     <form id="login-form">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required placeholder="your@email.com">
+        <input type="email" id="email" name="email" required placeholder="din@email.com">
       </div>
 
       <div class="form-group">
@@ -40,22 +39,22 @@
     </form>
 
     <div class="error" id="error-message"></div>
-    <div class="loading" id="loading">Signing in...</div>
+    <div class="loading" id="loading">Logger inn...</div>
   </div>
 
   <script>
-    // This page expects the main bundle to expose `window.isAuthenticated` and `window.handleLogin`.
+    // siden forventer at main bundle viser 'window.isAuthenticated' og 'window.handleLogin'
     (async function(){
       try{
         if(window.isAuthenticated){
           const authed = await window.isAuthenticated()
           if(authed){
-            console.log('Already authenticated — redirecting to /index.html')
+            console.log('Allerede verifisert, sender til index.html')
             window.location.replace('/index.html')
             return
           }
         }
-      }catch(e){console.warn('Auth check failed on login page:', e)}
+      }catch(e){console.warn('Sjekk feilet på login:', e)}
 
       const form = document.getElementById('login-form')
       const errorMessage = document.getElementById('error-message')
@@ -70,12 +69,12 @@
         errorMessage.style.display = 'none'
 
         try{
-          if(!window.handleLogin) throw new Error('Login helper not available')
+          if(!window.handleLogin) throw new Error('Login utilgjengelig')
           await window.handleLogin(email, password)
-          console.log('Login successful')
+          console.log('Login vellykket')
           window.location.href = '/index.html'
         }catch(err){
-          errorMessage.textContent = err.message || 'Login failed. Please try again.'
+          errorMessage.textContent = err.message || 'Login feilet, prøv igjen'
           errorMessage.style.display = 'block'
           loading.style.display = 'none'
           console.error('Login error:', err)
