@@ -147,36 +147,49 @@
 
     <script type="module">
         import { handleLogin } from '../src/login.js'
+        import { isAuthenticated } from '../src/modules/supabase.js'
 
-        const form = document.getElementById('login-form')
-        const errorMessage = document.getElementById('error-message')
-        const loading = document.getElementById('loading')
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault()
-
-            const email = document.getElementById('email').value
-            const password = document.getElementById('password').value
-
-            loading.style.display = 'block'
-            errorMessage.style.display = 'none'
-
+        (async () => {
             try {
-                await handleLogin(email, password)
-
-                console.log('Login successful')
-
-                // Redirect to dashboard
-                window.location.href = '/index.html'
-
-            } catch (error) {
-                
-                errorMessage.textContent = error.message || 'Login failed. Please try again.'
-                errorMessage.style.display = 'block'
-                loading.style.display = 'none'
-                console.error('Login error:', error)
+                const authed = await isAuthenticated() // sender deg til index om du allerede er verifisert
+                if (authed) {
+                    console.log('redirecting to /index.html')
+                    window.location.replace('/index.html')
+                    return
+                }
+            } catch (err) {
+                console.warn('Auth check failed on login page:', err)
             }
-        })
+
+            const form = document.getElementById('login-form')
+            const errorMessage = document.getElementById('error-message')
+            const loading = document.getElementById('loading')
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault()
+
+                const email = document.getElementById('email').value
+                const password = document.getElementById('password').value
+
+                loading.style.display = 'block'
+                errorMessage.style.display = 'none'
+
+                try {
+                    await handleLogin(email, password)
+
+                    console.log('Login successful')
+
+                    // Redirect to dashboard
+                    window.location.href = '/index.html'
+
+                } catch (error) {
+                    errorMessage.textContent = error.message || 'Login failed. Please try again.'
+                    errorMessage.style.display = 'block'
+                    loading.style.display = 'none'
+                    console.error('Login error:', error)
+                }
+            })
+        })()
     </script>
 </body>
 </html>
