@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <link rel="stylesheet" crossorigin href="/assets/index-DgQayq7R.css">
+  <style>
+    /* keep the inline styles from the original login page for layout */
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center}
+    .login-container{background:white;padding:40px;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.3);width:100%;max-width:400px}
+    h1{font-size:1.8rem;margin-bottom:10px;color:#333}
+    .subtitle{color:#999;margin-bottom:30px;font-size:.95rem}
+    .form-group{margin-bottom:20px}
+    label{display:block;margin-bottom:8px;color:#333;font-weight:500}
+    input{width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem}
+    input:focus{outline:none;border-color:#667eea}
+    button{width:100%;padding:12px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer}
+    .error{color:#e74c3c;margin-top:15px;padding:12px;background:#fadbd8;border-radius:8px;display:none}
+    .loading{display:none;color:#667eea;text-align:center;margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Admin Login</h1>
+    <p class="subtitle">Enter your credentials to access the blog dashboard</p>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="your@email.com">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required placeholder="••••••••">
+      </div>
+
+      <button type="submit">Sign In</button>
+    </form>
+
+    <div class="error" id="error-message"></div>
+    <div class="loading" id="loading">Signing in...</div>
+  </div>
+
+  <script>
+    // This page expects the main bundle to expose `window.isAuthenticated` and `window.handleLogin`.
+    (async function(){
+      try{
+        if(window.isAuthenticated){
+          const authed = await window.isAuthenticated()
+          if(authed){
+            console.log('Already authenticated — redirecting to /index.html')
+            window.location.replace('/index.html')
+            return
+          }
+        }
+      }catch(e){console.warn('Auth check failed on login page:', e)}
+
+      const form = document.getElementById('login-form')
+      const errorMessage = document.getElementById('error-message')
+      const loading = document.getElementById('loading')
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const email = document.getElementById('email').value
+        const password = document.getElementById('password').value
+
+        loading.style.display = 'block'
+        errorMessage.style.display = 'none'
+
+        try{
+          if(!window.handleLogin) throw new Error('Login helper not available')
+          await window.handleLogin(email, password)
+          console.log('Login successful')
+          window.location.href = '/index.html'
+        }catch(err){
+          errorMessage.textContent = err.message || 'Login failed. Please try again.'
+          errorMessage.style.display = 'block'
+          loading.style.display = 'none'
+          console.error('Login error:', err)
+        }
+      })
+    })()
+  </script>
+
+  <script type="module" crossorigin src="/assets/index-nQ5Y1nxA.js"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@
 import { renderPostForm } from './components/post-form.js'
 import { renderPostList } from './components/post-list.js'
 import { isAuthenticated, getCurrentUser, logout } from './modules/supabase.js'
+import { handleLogin } from './login.js'
 
 const formContainer = document.getElementById('post-form')
 const listContainer = document.getElementById('post-list')
@@ -63,4 +64,12 @@ async function initApp() {
 if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
   console.log("Sending to login")
   document.addEventListener('DOMContentLoaded', initApp)
+}
+
+// Expose login helpers for a standalone login page (public copy)
+try {
+  window.handleLogin = handleLogin
+  window.isAuthenticated = isAuthenticated
+} catch (e) {
+  console.warn('Failed to expose login helpers to window', e)
 }
