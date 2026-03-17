@@ -32,11 +32,11 @@ export async function renderPostList(container) {
       list.appendChild(el)
     })
 
-    container.innerHTML = '<h2>Posts</h2>'
+    container.innerHTML = '<h2>Poster</h2>'
     container.appendChild(list)
   } catch (err) {
     console.error('Failed to load posts', err)
-    container.innerHTML = `<h2>Posts</h2><p class="error">Failed to load posts: ${escapeHtml(err.message || err)}</p>`
+    container.innerHTML = `<h2>Poster</h2><p class="error">Failed to load posts: ${escapeHtml(err.message || err)}</p>`
   }
 }
 
