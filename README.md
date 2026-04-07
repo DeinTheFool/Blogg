@@ -4,7 +4,7 @@ En moderne bloggplattform bygget med Vite for frontend og Node.js/Express for ba
 
 ## Beskrivelse
 
-Dette er en fullstack-blogg-applikasjon designet for enkel publisering av innhold. Frontend er bygget med moderne web-teknologier som HTML, CSS og JavaScript, mens backend håndterer API-endepunkter og databaseinteraksjoner. 
+Dette er en fullstack blogg-applikasjon designet for enkel publisering av innhold. Frontend er bygget med moderne web-teknologier som HTML, CSS og JavaScript, mens backend håndterer API-endepunkter og databaseinteraksjoner. 
 
 ## Funksjoner
 
