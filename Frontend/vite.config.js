@@ -1,9 +1,7 @@
-// config for vite slik at jeg kan raskt test om siden fungerer
-
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  root: 'Frontend',
+  root: '.',
   base: '/',
   build: {
     outDir: 'dist',

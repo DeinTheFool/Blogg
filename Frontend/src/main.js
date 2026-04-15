@@ -24,38 +24,37 @@ async function initApp() {
     const authenticated = await isAuthenticated()
     console.log('Auth check result:', authenticated)
     
-    if (authenticated) {
+    if (!authenticated) {
       // Bruker-info og log ut knapp
-      userInfo.innerHTML = `
+      console.log('Not authenticated, redirecting to login')
+      window.location.replace('/assets/login.html')
+      return
+    }
+
+    const user = await getCurrentUser()
+    console.log('Authenticated user:', user?.email)
+
+    userInfo.innerHTML = `
       <div style="display: flex; align-items: center; gap: 15px;">
-      <span>${user.email}</span>
-      <button id="logout-btn" style="padding: 8px 16px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">Logout</button>
+        <span>${user.email}</span>
+        <button id="logout-btn" style="padding: 8px 16px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">Logout</button>
       </div>
     `
-    
+
     const logoutBtn = document.getElementById('logout-btn')
     logoutBtn.addEventListener('click', () => {
       logout()
     })
-    
-        // Viser siden om brukeren er logget inn
-    const user = await getCurrentUser()
-    
-    
 
-    // Henter post-utfylling og post-liste
+    // Viser siden om brukeren er logget inn
     renderPostForm(formContainer, async () => {
       await renderPostList(listContainer)
     })
-      return
-    }
-    
-
-    
     renderPostList(listContainer)
   } catch (error) {
     console.error('Error initializing app:', error)
     formContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`
+    window.location.replace('/assets/login.html')
   }
 }
 
